@@ -25,6 +25,11 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+app.use((req, res) => {
+  res.status(404)
+     .sendFile(path.join(__dirname, 'error.html'));
+});
+
 app.listen(port, err => {
   if (err) {
     console.log(err);
