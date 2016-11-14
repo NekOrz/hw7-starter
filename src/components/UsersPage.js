@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
-function User(props) {
-  return <li>{props.name}</li>;
+function Produce(arr) {
+  const list = [];
+  arr.forEach((u, i) => {
+    const str = `#/users/${i + 1}`;
+    list.push(<li key={i}><a href={str}>User {i + 1}</a></li>);
+  });
+  return list;
 }
-User.propTypes = {
-  name: React.PropTypes.string,
-};
 
 class UsersPage extends Component {
   state = {
@@ -25,37 +27,18 @@ class UsersPage extends Component {
   }
   render() {
     const users = this.state.users.users;
-    if (JSON.stringify(users) === '{}') {
-      return (
-        <div>Loading...</div>
-      );
+    if (users === undefined) {
+      return <div>Loading...</div>;
     }
-/*
-    const html = [
-      <div>Users</div>,
-      <div>{JSON.stringify(this.state.users)}</div>,
-      <li>Loading...</li>
-    ];
 
-    html[2].children
-*/
     return (
       <div>Users
         {JSON.stringify(this.state.users)}
         <ul>
-          <li><a href="#/users/1">User 1</a></li>
-          <li><a href="#/users/2">User 2</a></li>
+          {Produce(users)}
         </ul>
       </div>
     );
-    // <li>
-    //   {
-    //     users.map(user => <User key={user.name} name={user.name} />)
-    //   }
-    // </li>
-    // <div>Users
-    //   {JSON.stringify(this.state.users)}
-    // </div>
   }
 }
 

@@ -17,8 +17,7 @@ class SingleUserPage extends Component {
         this.setState({
           userData: json
         });
-      })
-      .catch(rej => console.log(rej));
+      });
   }
 
   render() {
